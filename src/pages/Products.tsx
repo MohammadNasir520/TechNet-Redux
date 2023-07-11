@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 
 export default function Products() {
 
+  
 
   const {data, error, isLoading}=useGetProductsQuery(undefined)
 console.log(data)
