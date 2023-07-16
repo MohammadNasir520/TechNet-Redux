@@ -1,36 +1,37 @@
-
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { FiSend } from 'react-icons/fi';
-import { useGetCommentQuery, usePostCommentMutation } from '@/redux/features/poducts/productApi';
-
-
-
+import {
+  useGetCommentQuery,
+  usePostCommentMutation,
+} from '@/redux/features/poducts/productApi';
 
 interface IProps {
   id: string;
 }
 
 export default function ProductReview({ id }: IProps) {
-
-
   const [inputValue, setInputValue] = useState<string>('');
 
-  const {data}=useGetCommentQuery(id,{refetchOnMountOrArgChange:true, pollingInterval:30000})
-const [postComment, {isLoading, isError, isSuccess}]=usePostCommentMutation()
-console.log(isLoading, isError, isSuccess)
+  const { data } = useGetCommentQuery(id, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 30000,
+  });
+  const [postComment, { isLoading, isError, isSuccess }] =
+    usePostCommentMutation();
+  console.log(isLoading, isError, isSuccess);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(inputValue);
-    console.log('id',id)
-    const options={
+    console.log('id', id);
+    const options = {
       id,
-      data:{comment:inputValue}
-    }
-postComment(options)
+      data: { comment: inputValue },
+    };
+    postComment(options);
     setInputValue('');
   };
 
@@ -54,7 +55,7 @@ postComment(options)
         </Button>
       </form>
       <div className="mt-10 pb-36">
-        {data?.comments.map((comment:string, index:number) => (
+        {data?.comments.map((comment: string, index: number) => (
           <div key={index} className="flex gap-3 items-center mb-5 ">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
